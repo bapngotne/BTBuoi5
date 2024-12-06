@@ -1,4 +1,4 @@
-﻿using System.Drawing.Text;
+using System.Drawing.Text;
 
 namespace WinFormsApp1
 {
@@ -16,12 +16,9 @@ namespace WinFormsApp1
         private void openToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             richTextBox1.Clear();
-
-            // Thiết lập lại kiểu chữ và cỡ chữ mặc định
             richTextBox1.Font = new Font("Tahoma", 12);
             richTextBox1.ForeColor = Color.Black;
 
-            // Nếu bạn muốn hiển thị một thông báo cho người dùng
             MessageBox.Show("Một văn bản mới đã được tạo.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -60,15 +57,11 @@ namespace WinFormsApp1
         {
             if (toolStripComboBox2.SelectedItem != null)
             {
-                // Lấy kích thước chữ mà người dùng đã chọn
                 string selectedSizeStr = toolStripComboBox2.SelectedItem.ToString();
                 float selectedSize;
-
-                // Chuyển đổi chuỗi sang số thực
                 if (float.TryParse(selectedSizeStr, out selectedSize))
                 {
-                    // Cập nhật cỡ chữ cho văn bản được chọn
-                    string currentFontName = richTextBox1.SelectionFont?.FontFamily.Name ?? "Tahoma"; // Kiểu chữ mặc định nếu không có kiểu chữ nào
+                    string currentFontName = richTextBox1.SelectionFont?.FontFamily.Name ?? "Tahoma";
                     richTextBox1.SelectionFont = new Font(currentFontName, selectedSize);
                 }
             }
@@ -81,7 +74,6 @@ namespace WinFormsApp1
                 string selectedFont = toolStripComboBox1.SelectedItem.ToString();
                 float currentSize = richTextBox1.SelectionFont.Size;
 
-                // Cập nhật kiểu chữ cho văn bản được chọn
                 richTextBox1.SelectionFont = new Font(selectedFont, currentSize);
             }
         }
@@ -111,12 +103,9 @@ namespace WinFormsApp1
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
             richTextBox1.Clear();
-
-            // Thiết lập lại kiểu chữ và cỡ chữ mặc định
             richTextBox1.Font = new Font("Tahoma", 12);
             richTextBox1.ForeColor = Color.Black;
 
-            // Nếu bạn muốn hiển thị một thông báo cho người dùng
             MessageBox.Show("Một văn bản mới đã được tạo.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -144,20 +133,37 @@ namespace WinFormsApp1
             {
                 toolStripComboBox2.Items.Add(s);
             }
-
-            // Gán sự kiện SelectedIndexChanged cho ComboBox
             toolStripComboBox1.SelectedIndexChanged += toolStripComboBox1_SelectedIndexChanged;
             toolStripComboBox2.SelectedIndexChanged += toolStripComboBox2_SelectedIndexChanged;
         }
 
         private void toolStripComboBox2_SelectedIndexChanged(object? sender, EventArgs e)
         {
+            if (richTextBox1.SelectionFont != null && toolStripComboBox2.SelectedItem != null)
+            {
+                string selectedSizeStr = toolStripComboBox2.SelectedItem.ToString();
+                float selectedSize;
 
+                // Chuyển đổi chuỗi sang số thực
+                if (float.TryParse(selectedSizeStr, out selectedSize))
+                {
+                    // Cập nhật cỡ chữ cho văn bản được chọn
+                    string currentFontName = richTextBox1.SelectionFont.FontFamily.Name;
+                    richTextBox1.SelectionFont = new Font(currentFontName, selectedSize);
+                }
+            }
         }
 
         private void toolStripComboBox1_SelectedIndexChanged(object? sender, EventArgs e)
         {
+            if (richTextBox1.SelectionFont != null && toolStripComboBox1.SelectedItem != null)
+            {
+                string selectedFont = toolStripComboBox1.SelectedItem.ToString();
+                float currentSize = richTextBox1.SelectionFont.Size;
 
+                // Cập nhật kiểu chữ cho văn bản được chọn
+                richTextBox1.SelectionFont = new Font(selectedFont, currentSize);
+            }
         }
 
         private void toolStripButton5_Click(object sender, EventArgs e)
@@ -196,16 +202,15 @@ namespace WinFormsApp1
         private void windowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FontDialog fontDlg = new FontDialog();
-            fontDlg.ShowColor = true;  // Cho phép hiển thị màu sắc
-            fontDlg.ShowApply = true;   // Hiển thị nút Apply
-            fontDlg.ShowEffects = true;  // Hiển thị hiệu ứng chữ
-            fontDlg.ShowHelp = true;     // Hiển thị nút Help
+            fontDlg.ShowColor = true;
+            fontDlg.ShowApply = true;
+            fontDlg.ShowEffects = true;
+            fontDlg.ShowHelp = true;
 
-            if (fontDlg.ShowDialog() == DialogResult.OK) // Kiểm tra nếu người dùng ấn OK
+            if (fontDlg.ShowDialog() == DialogResult.OK)
             {
-                // Thay đổi màu chữ và kiểu chữ trong RichTextBox
-                richTextBox1.ForeColor = fontDlg.Color; // Cập nhật màu chữ
-                richTextBox1.Font = fontDlg.Font;       // Cập nhật kiểu chữ
+                richTextBox1.ForeColor = fontDlg.Color;
+                richTextBox1.Font = fontDlg.Font;
             }
         }
     }
